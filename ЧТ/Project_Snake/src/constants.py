@@ -1,0 +1,13 @@
+from .field import Field
+
+WIDTH = 20
+HEIGHT = 20
+SCALE = 30
+FIELD = Field(WIDTH, HEIGHT, SCALE)
+ELEMENT_SIZE = SCALE - 2
+
+FPS = 60
+
+START_SPEED = FPS // 2
+UP_SPEED_DELAY = 2
+UP_SPEED_STEP = 1.5
