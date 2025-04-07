@@ -2,3 +2,5 @@
 #TG/
 .vs
 __pycache__
+*.log
+#TGbot/config.py
