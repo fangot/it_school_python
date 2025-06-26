@@ -10,7 +10,7 @@ class Field:
 
         return Square(
            int((self.width / self.scale) // 2) * self.scale,
-            int((self.height / self.scale) // 2) * self.scale
+           int((self.height / self.scale) // 2) * self.scale
         )
     def get_rand_coords(self) -> Square:
         return Square(

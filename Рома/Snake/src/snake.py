@@ -50,4 +50,4 @@ class Snake:
             return False
 
     def up_speed(self) -> None:
-        self.speed = self.speed // UP_SPEED_STEP
+        self.speed *= UP_SPEED_STEP

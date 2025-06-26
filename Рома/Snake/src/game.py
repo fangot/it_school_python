@@ -36,20 +36,22 @@ class Game:
             return
         
         self.tick += 1
-        if not self.tick % self.snake.speed:
-            self.is_set_direction = False
-            new_head = self.snake.get_new_head()
-            if self.check_game_over(new_head):
-                self.is_game_over = True
-                return
+        if self.tick % round((FPS / self.snake.speed) * FPS):
+            return
 
-            self.snake.add_square(new_head)
-            if self.apple.is_eaten():
-                self.score += 1
-                self.apple = Apple()
-                self.snake.up_speed()
-            else:
-                self.snake.del_square()
+        self.is_set_direction = False
+        new_head = self.snake.get_new_head()
+        if self.check_game_over(new_head):
+            self.is_game_over = True
+            return
+
+        self.snake.add_square(new_head)
+        if self.apple.is_eaten():
+            self.score += 1
+            self.apple = Apple()
+            self.snake.up_speed()
+        else:
+            self.snake.del_square()
         
     def render(self) -> None:
         self.engine.fill_display()
@@ -61,7 +63,7 @@ class Game:
         
         if self.is_game_over:
             self.engine.draw_game_over()
-            action = self.engine.draw_restart_button()
+            action = self.engine.draw_restart_button(Game.restart.__name__)
             if action is not None:
                 exec("self." + str(action) + "()")
             
