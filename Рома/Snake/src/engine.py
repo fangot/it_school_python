@@ -35,7 +35,7 @@ class Engine:
     def fill_display(self) -> None:
         self.display.fill(Colors.FIELD)
      
-    def draw_square(self, sqr: Square, color: str, size: list = (ELEMENT_SIZE, ELEMENT_SIZE)) -> None:
+    def draw_square(self, sqr: Square, color: str, size: list[int, int] = (ELEMENT_SIZE, ELEMENT_SIZE)) -> None:
         pygame.draw.rect(
             self.display,
             pygame.Color(color),
@@ -44,7 +44,7 @@ class Engine:
             0
         )
         
-    def draw_text(self, text: str, color: str, position: str | list, center: list = (FIELD.width // 2, FIELD.height // 2)) -> None:
+    def draw_text(self, text: str, color: str, position: str | list[int, int], center: list[int, int] = (FIELD.width // 2, FIELD.height // 2)) -> None:
         message = self.font.render(text, True, pygame.Color(color))
         if position == "center":
             position = message.get_rect(center = center)
@@ -57,7 +57,7 @@ class Engine:
             (5, 5)
         )
 
-    def draw_button(self, text: str, coords: list, size: list, color: list, action: str = None) -> str | None:
+    def draw_button(self, text: str, coords: list[int, int], size: list[int, int], color: list[str, str, str], action: str = None) -> str | None:
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
         
