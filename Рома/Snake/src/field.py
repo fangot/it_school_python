@@ -2,7 +2,7 @@ from .square import Square
 from random import randrange
 
 class Field:
-    def __init__(self, width: int, height: int, scale: int ) -> None:
+    def __init__(self, width: int, height: int, scale: int) -> None:
         self.width = width * scale
         self.height = height * scale
         self.scale = scale
