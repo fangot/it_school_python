@@ -13,16 +13,16 @@ class Snake:
         self.body.append(self.get_tail())
 
     def get_new_square(self, forward: int) -> Square:
-        sign = forward * FIELD.scale
+        offset = forward * FIELD.scale
         if self.direction.value > 2:
-            sign = -forward * FIELD.scale
+            offset = -forward * FIELD.scale
 
         if self.direction.value % 2 == 0:
-            x = self.body[0].x - sign
+            x = self.body[0].x - offset
             y = self.body[0].y
         else:
             x = self.body[0].x
-            y = self.body[0].y - sign
+            y = self.body[0].y - offset
 
         return Square(x, y)
 
