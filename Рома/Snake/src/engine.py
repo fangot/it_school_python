@@ -31,6 +31,9 @@ class Engine:
     
     def set_default_cursor(self) -> None:
         pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+
+    def set_hand_cursor(self) -> None:
+        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
     
     def fill_display(self) -> None:
         self.display.fill(Colors.FIELD)
@@ -44,10 +47,10 @@ class Engine:
             0
         )
         
-    def draw_text(self, text: str, color: str, position: str | list[int, int], center: list[int, int] = (FIELD.width // 2, FIELD.height // 2)) -> None:
+    def draw_text(self, text: str, color: str, position: list[int, int], is_center: bool = False) -> None:
         message = self.font.render(text, True, pygame.Color(color))
-        if position == "center":
-            position = message.get_rect(center = center)
+        if is_center:
+            position = message.get_rect(center = position)
         self.display.blit(message, position)
         
     def draw_score(self, score: int) -> None:
@@ -57,12 +60,12 @@ class Engine:
             (5, 5)
         )
 
-    def draw_button(self, text: str, coords: list[int, int], size: list[int, int], color: list[str, str, str], action: str = None) -> str | None:
+    def draw_button(self, text: str, coords: list[int, int], size: list[int, int], color: list[str, str, str], action: str) -> str | None:
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
         
         if (coords[0] + size[0] > mouse[0] > coords[0]) and (coords[1] + size[1] > mouse[1] > coords[1]):
-            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+            self.set_hand_cursor()
             self.draw_square(
                 Square(coords[0], coords[1]),
                 color[1],
@@ -71,7 +74,7 @@ class Engine:
             if click[0] == 1:
                 return action
         else:
-            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+            self.set_default_cursor()
             self.draw_square(
                 Square(coords[0], coords[1]),
                 color[0],
@@ -81,8 +84,8 @@ class Engine:
         self.draw_text(
             text,
             color[2],
-            "center",
-            (coords[0] + size[0] // 2, coords[1] + size[1] // 2)
+            (coords[0] + size[0] // 2, coords[1] + size[1] // 2),
+            True
         )
         
     def draw_restart_button(self, action: str) -> str | None:
@@ -105,7 +108,8 @@ class Engine:
         self.draw_text(
             "GAME OVER",
             Colors.GAME_OVER,
-            "center"
+            (FIELD.width // 2, FIELD.height // 2),
+            True
         )
 
     def update(self) -> None:
