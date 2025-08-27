@@ -6,12 +6,13 @@ class Field:
         self.width = width * scale
         self.height = height * scale
         self.scale = scale
+    
     def get_start_coords(self) -> Square:
-
         return Square(
            int((self.width / self.scale) // 2) * self.scale,
            int((self.height / self.scale) // 2) * self.scale
         )
+    
     def get_rand_coords(self) -> Square:
         return Square(
             randrange(0, self.width // self.scale) * self.scale,

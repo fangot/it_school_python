@@ -1,7 +1,7 @@
 from .constants import *
 from .square import Square
 
-class Eat:
+class Item:
     def __init__(self) -> None:
         self.sqr = None
 

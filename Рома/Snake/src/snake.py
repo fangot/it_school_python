@@ -26,9 +26,11 @@ class Snake:
 
         return Square(x, y)
 
-    def set_direction(self, new_direction: Direction) -> None:
+    def set_direction(self, new_direction: Direction) -> bool:
         if self.direction.value % 2 != new_direction.value % 2:
             self.direction = new_direction
+            return True
+        return False
 
     def add_square(self, head: Square) -> None:
         self.body.appendleft(head)

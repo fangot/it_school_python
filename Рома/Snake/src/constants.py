@@ -1,10 +1,10 @@
 from .field import Field
 
-WIDTH = 25
-HEIGHT = 25
+WIDTH = 20
+HEIGHT = 20
 SCALE = 36
 FIELD = Field(WIDTH, HEIGHT, SCALE)
-ELEMENT_SIZE = SCALE - 2
+FILL_SIZE = SCALE - 4
 
 FPS = 60
 

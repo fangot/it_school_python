@@ -1,4 +1,4 @@
-from .eat import Eat
+from .item import Item
 
-class Apple (Eat):
+class Apple (Item):
     pass

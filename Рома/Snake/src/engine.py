@@ -17,7 +17,7 @@ class Engine:
                 return True
         return False
     
-    def get_press_button(self) -> Direction | None:
+    def get_pressed_button(self) -> Direction | None:
         button = pygame.key.get_pressed()
         if button[pygame.K_UP]:
             return Direction.UP
@@ -38,16 +38,16 @@ class Engine:
     def fill_display(self) -> None:
         self.display.fill(Colors.FIELD)
      
-    def draw_square(self, sqr: Square, color: str, size: list[int, int] = (ELEMENT_SIZE, ELEMENT_SIZE)) -> None:
+    def draw_square(self, sqr: Square, color: str, size: tuple[int, int] = (FILL_SIZE, FILL_SIZE)) -> None:
         pygame.draw.rect(
             self.display,
             pygame.Color(color),
             (sqr.x, sqr.y, size[0], size[1]),
             0,
-            0
+            2
         )
         
-    def draw_text(self, text: str, color: str, position: list[int, int], is_center: bool = False) -> None:
+    def draw_text(self, text: str, color: str, position: tuple[int, int], is_center: bool = False) -> None:
         message = self.font.render(text, True, pygame.Color(color))
         if is_center:
             position = message.get_rect(center = position)
@@ -57,19 +57,28 @@ class Engine:
         self.draw_text(
             "SCORE: " + str(score),
             Colors.SCORE,
-            (5, 5)
+            (FIELD.width // 2, self.font.get_height() // 2 + 5),
+            True
         )
 
-    def draw_button(self, text: str, coords: list[int, int], size: list[int, int], color: list[str, str, str], action: str) -> str | None:
+    def draw_button(self, text: str, coords: tuple[int, int], size: tuple[int, int], color: tuple[str, str, str], action: str) -> str | None:
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
+
+        width = size[0]
+        height = size[1]
+        text_rect = self.font.render(text, True, pygame.Color(color[2]))
+        if width - 10 < text_rect.get_width():
+            width = text_rect.get_width() + 10
+        if height - 10 < text_rect.get_height():
+            height = text_rect.get_height() + 10
         
-        if (coords[0] + size[0] > mouse[0] > coords[0]) and (coords[1] + size[1] > mouse[1] > coords[1]):
+        if (coords[0] + width > mouse[0] > coords[0]) and (coords[1] + height > mouse[1] > coords[1]):
             self.set_hand_cursor()
             self.draw_square(
                 Square(coords[0], coords[1]),
                 color[1],
-                (size[0], size[1])
+                (width, height)
             )
             if click[0] == 1:
                 return action
@@ -78,27 +87,25 @@ class Engine:
             self.draw_square(
                 Square(coords[0], coords[1]),
                 color[0],
-                (size[0], size[1])
+                (width, height)
             )
 
         self.draw_text(
             text,
             color[2],
-            (coords[0] + size[0] // 2, coords[1] + size[1] // 2),
+            (coords[0] + width // 2, coords[1] + height // 2),
             True
         )
         
     def draw_restart_button(self, action: str) -> str | None:
-        width = 200
-        height = 40
-        x_offset = 0
-        y_offset = 70
+        width = 100
+        height = 50
+        left_offset = 15
+        bottom_offset = 15
+
         return self.draw_button(
             "RESTART",
-            (
-                (FIELD.width - width) // 2 + x_offset,
-                (FIELD.height - height) // 2 + y_offset
-            ),
+            (left_offset, FIELD.height - bottom_offset - height),
             (width, height),
             (Colors.RESTART_BG, Colors.RESTART_BG_HOVER, Colors.RESTART_BLACK),
             action
