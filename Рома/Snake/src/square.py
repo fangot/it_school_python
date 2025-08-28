@@ -1,3 +1,5 @@
+import math
+
 class Square:
     squares = []
 
@@ -8,6 +10,9 @@ class Square:
 
     def __eq__(self, other) -> bool:
         return self.x == other.x and self.y == other.y
+
+    def distant_to(self, other) -> tuple[int, int]:
+        return math.sqrt((self.x - other.x) ** 2 + (self.y - other.y) ** 2)
 
     def delete(self) -> None:
         if self in Square.squares:
