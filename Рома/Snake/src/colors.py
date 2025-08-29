@@ -4,6 +4,7 @@ class Colors:
     APPLE = 'red'
     SCORE = 'black'
     GAME_OVER = 'black'
+    HOLE = 'black'
 
     RESTART_BLACK = 'black'
     RESTART_BG = 'darkorange'
