@@ -1,3 +1,4 @@
+from .hole import Hole
 from .constants import *
 from .square import Square
 from .engine import Engine
@@ -12,6 +13,7 @@ class Game:
         self.tick = None
         self.score = None
         self.snake = None
+        self.hole = None
         self.is_running = None
         self.game_over = None
         self.is_set_direction = None
@@ -21,6 +23,7 @@ class Game:
         self.engine.set_default_cursor()
         self.snake = Snake(FIELD.get_start_coords(), START_SPEED)
         self.apple = Apple()
+        self.hole = None
         self.tick = 0
         self.score = 0
         self.is_running = True
@@ -28,7 +31,10 @@ class Game:
         self.is_set_direction = False
 
     def check_game_over(self, head: Square) -> None:
-        return not FIELD.check_inside(head) or self.snake.check_inside(head)
+        hole = False
+        if self.hole is not None:
+            hole = self.hole.is_eaten()
+        return not FIELD.check_inside(head) or self.snake.check_inside(head) or hole
 
     def events(self) -> None:
         self.is_running = not self.engine.is_quit()
@@ -56,19 +62,42 @@ class Game:
         else:
             self.snake.del_square()
 
+    def hole_state(self) -> None:
+        if self.hole is None and not self.tick % round(HOLE_TIME_TO_SPAWN):
+            self.hole = Hole(self.snake.body[0], self.tick)
+            return
+
+        if self.hole is not None and not self.tick % round(HOLE_TIME_TO_GROWTH):
+            if len(self.hole.body) >= 10:
+                self.hole = None
+            else:
+                self.hole.growth()
+            return
+
+        if self.hole is not None and self.hole.lifetime == self.tick:
+            self.hole = None
+            return
+
+
     def update_state(self) -> None:
         if self.game_over:
             return
 
         self.tick += 1
         self.snake_state()
+        self.hole_state()
         
     def render(self) -> None:
         self.engine.fill_display()
 
         self.engine.draw_square(self.apple.sqr, Colors.APPLE)
         for sqr in self.snake.body:
-            self.engine.draw_square(sqr,Colors.SNAKE)
+            self.engine.draw_square(sqr, Colors.SNAKE)
+
+        if self.hole is not None:
+            for sqr in self.hole.body:
+                self.engine.draw_square(sqr, Colors.HOLE)
+
         self.engine.draw_score(self.score)
 
         if self.game_over:

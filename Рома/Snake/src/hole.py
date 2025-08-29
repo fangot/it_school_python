@@ -5,6 +5,7 @@ import random
 
 class Hole (Item):
     def __init__(self, snake_head: Square, tick: int) -> None:
+        self.sqr = None
         self.lifetime = tick + random.randint(HOLE_LIFETIME - 30, HOLE_LIFETIME + 30)
         self.body = []
 
@@ -13,15 +14,34 @@ class Hole (Item):
 
         self.body.append(self.sqr)
 
-    def growth(self) -> None:
-        x = random.randint(-1, 1)
-        if x == 0:
-            y = random.choice([1, -1])
-        else:
-            y = random.randint(-1, 1)
+    def is_eaten(self) -> bool:
+        for item in self.body:
+            if not item.is_free():
+                del self
+                return True
+        return False
 
-        new_sqr = Square(
-            self.sqr.x + x * SCALE,
-            self.sqr.y + y * SCALE
-        )
-        self.body.append(new_sqr)
+    def growth(self) -> None:
+        body_to_growth = self.body.copy()
+
+        for sqr in body_to_growth:
+            max_loop = 10
+
+            while max_loop > 0:
+                max_loop -= 1
+                x = random.randint(-1, 1)
+                if x == 0:
+                    y = random.choice([1, -1])
+                else:
+                    y = random.randint(-1, 1)
+
+                new_sqr = Square(
+                    sqr.x + x * SCALE,
+                    sqr.y + y * SCALE
+                )
+
+                if new_sqr.is_free():
+                    self.body.append(new_sqr)
+                    break
+                else:
+                    new_sqr.delete()
