@@ -5,6 +5,7 @@ class Colors:
     SCORE = 'black'
     HOLE = 'black'
     GAME_OVER = 'black'
+    HOLE = 'black'
 
     RESTART_BLACK = 'black'
     RESTART_BG = 'darkorange'
