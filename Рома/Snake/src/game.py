@@ -21,6 +21,7 @@ class Game:
 
     def init(self) -> None:
         self.engine.set_default_cursor()
+        Square.squares = []
         self.snake = Snake(FIELD.get_start_coords(), START_SPEED)
         self.apple = Apple()
         self.hole = None
@@ -69,13 +70,13 @@ class Game:
 
         if self.hole is not None and not self.tick % round(HOLE_TIME_TO_GROWTH):
             if len(self.hole.body) >= 10:
-                self.hole = None
+                self.hole = self.hole.delete()
             else:
                 self.hole.growth()
             return
 
         if self.hole is not None and self.hole.lifetime == self.tick:
-            self.hole = None
+            self.hole = self.hole.delete()
             return
 
 

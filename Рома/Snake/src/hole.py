@@ -14,10 +14,15 @@ class Hole (Item):
 
         self.body.append(self.sqr)
 
+    def delete(self) -> None:
+        for item in self.body:
+            item.delete()
+        del self
+
     def is_eaten(self) -> bool:
         for item in self.body:
             if not item.is_free():
-                del self
+                self.delete()
                 return True
         return False
 

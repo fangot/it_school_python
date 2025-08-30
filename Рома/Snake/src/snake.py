@@ -36,6 +36,7 @@ class Snake:
         self.body.appendleft(head)
 
     def del_square(self) -> None:
+        self.body[-1].delete()
         self.body.pop()
 
     def get_tail(self) -> Square:
