@@ -11,7 +11,7 @@ class Square:
     def __eq__(self, other) -> bool:
         return self.x == other.x and self.y == other.y
 
-    def distant_to(self, other) -> tuple[int, int]:
+    def distant_to(self, other) -> float:
         return math.sqrt((self.x - other.x) ** 2 + (self.y - other.y) ** 2)
 
     def delete(self) -> None:

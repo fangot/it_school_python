@@ -85,8 +85,8 @@ class Game:
             return
 
         self.tick += 1
-        self.snake_state()
         self.hole_state()
+        self.snake_state()
         
     def render(self) -> None:
         self.engine.fill_display()
