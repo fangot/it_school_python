@@ -3,7 +3,7 @@ class Colors:
     SNAKE = 'lightcoral'
     APPLE = 'red'
     SCORE = 'black'
-    HOLE = 'brown'
+    HOLE = 'sienna'
     GAME_OVER = 'black'
 
     RESTART_BLACK = 'black'

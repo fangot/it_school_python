@@ -7,6 +7,7 @@ from .square import Square
 class Engine:
     def __init__(self) -> None:
         pygame.init()
+        pygame.display.set_caption(GAME_NAME)
         self.display = pygame.display.set_mode([FIELD.width, FIELD.height])
         self.clock = pygame.time.Clock()
         self.font = pygame.font.Font(None, FIELD.scale)

@@ -1,5 +1,7 @@
 from .field import Field
 
+GAME_NAME = "SNAKE"
+
 WIDTH = 20
 HEIGHT = 20
 SCALE = 36
