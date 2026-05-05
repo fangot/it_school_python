@@ -158,19 +158,82 @@ a.count("b") = 1
 a.clear()
 #a = []
 
-b = a
 #КОПИРОВАНИЕ МАССИВОВ
+b = a.copy()
+
+
+a1.sort()
+#[-1, 0, 3, 11, 21]
+
+a1.reverse()
+#[11, 3, -1, 21, 0]
 
 
 
+#Tuple
+
+t = (1, 2, 3)
+t1, t2, t3 = t
+#t1 = 1, t2 = 2, t3 = 3
 
 
 
+#Set
+
+a = {1, 2, 3}
+b = {4, 5, 2}
+d = set()
+
+c = a | b
+#{1, 2, 3, 4, 5}
+c = a.union(b)
+
+c = a & b
+c = a.intersection(b)
+#{2}
 
 
+c = a - b
+c = a.difference(b)
+#{1, 3}
+
+a.add(9)
+#a = {1, 2, 3, 9}
+
+a.remove(1)
+#a = {2, 3, 9}
+
+a.discard(11)
+#a = {2, 3, 9}
 
 
+#Dict
+d = {}
+a = {"a": 1, "b": 2, "c": 3}
+
+a["a"]
+#= 1
+
+a.get("q", 0)
+#= 0
 
 
+a["q"] = 11
+#{"a": 1, "b": 2, "c": 3, "q": 11}
+
+del a["a"]
+#{"b": 2, "c": 3, "q": 11}
 
 
+"a" in a
+#False
+
+
+keys = a.keys()
+#["b", "c", "q"]
+
+vals = a.values()
+#[2, 3, 11]
+
+len(a)
+#3

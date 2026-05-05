@@ -1,18 +1,30 @@
 from pprint import pprint
+from random import choice
 
-from src.cities_api import CitiesAPI
-from src.weather_api import WeatherAPI
+from src2.db_manager import DBManager
+from pathlib import Path
 
-cities = CitiesAPI()
-weather = WeatherAPI()
+DEFAULT_DB_PATH: Path = Path(__file__).parent / "db" / "cities_database.sqlite"
 
-city = cities.get_city_by_id(524901)
+db = DBManager(str(DEFAULT_DB_PATH))
+res = db.select("cities")
+pprint(res)
 
-data = weather.get_current(city.latitude, city.longitude)
-forecast = weather.get_forecast(city.latitude, city.longitude, days=7)
+#from src2.cities_api import CitiesAPI
+#from src.weather_api import WeatherAPI
 
-pprint(city)
+#cities = CitiesAPI()
+#weather = WeatherAPI()
 
-pprint(data)
+#all_city = cities.get_all_ids()
 
-pprint(forecast)
+#city = cities.get_city_by_id(choice(all_city))
+
+#data = weather.get_current(city.latitude, city.longitude)
+#forecast = weather.get_forecast(city.latitude, city.longitude, days=7)
+
+#pprint([city.country_name, city.name])
+
+#pprint(data)
+
+#pprint(forecast)
